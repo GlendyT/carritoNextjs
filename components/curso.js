@@ -1,21 +1,23 @@
 
 import styles from "../styles/curso.module.css"
 
-export default function Curso() {
+export default function Curso({curso}) {
+
+  const {contenido, imagen, titulo} = curso.attributes
+
   return (
-    <section className={`${styles.curso}`}>
-    <div className={`${styles.imagen}`}> 
-        
-    <div className={`contenedor ${styles.grid}`}>
-      <div className={`${styles.contenido}`}>
-        <h2 className="heading">Cursos con hasta 30% de descuento</h2>
-        <p>j-hope (Jeong, Hoseok) is a South Korean rapper, dancer, songwriter,
-           music producer and member of 21st century pop icons, BTS. 
-           Known as the lead dancer of the group, j-hope boasts his performance 
-           skills that are nearly perfect.</p>
-      </div>
-    </div>
-    </div>
-   </section>
+      <section className={`${styles.curso} curso`}>
+          <style jsx>{`
+              .curso {
+                  background-image: linear-gradient( to right, rgb(0 0 0 / .65), rgb(0 0 0 / .7)), url(${imagen?.data?.attributes?.url})
+              }
+          `}</style>
+          <div className={`contenedor ${styles.grid}`}>
+              <div className={styles.contenido}>
+                  <h2 className='heading'>{titulo}</h2>
+                  <p>{contenido}</p>
+              </div>
+          </div>
+      </section>
   )
 }

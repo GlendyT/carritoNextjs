@@ -3,16 +3,20 @@ import Image from "next/image"
 import Layout from "@/components/layout"
 import styles from "../styles/carrito.module.css"
 
+
 export default function Carrito({carrito, actualizarCantidad, eliminarProducto}) {
+
+  console.log(guitarra)
 
   const [total, setTotal] = useState(0)
 
   useEffect(() => {
-    const calculoTotal = carrito.reduce ((total, producto) => total + (producto.cantidad + producto.followers), 0)
+    const calculoTotal = carrito.reduce ((total, producto) => total + (producto.cantidad + producto.precio), 0)
     setTotal(calculoTotal)
   }, [carrito])
+
   return (
-    <Layout title="Carrito de compras"> 
+    <Layout title="Carrito de Compras"> 
     <main className="contenedor">
         <h1 className="heading">Carrito</h1>
         
@@ -24,10 +28,10 @@ export default function Carrito({carrito, actualizarCantidad, eliminarProducto})
                 carrito.map(producto => (
                   <div key={producto} className={styles.producto}>
                     <div>
-                      <Image width={250} height={480} src={producto.image} alt={producto.name}/>
+                      <Image width={250} height={480} src={producto.imagen} alt={producto.nombre}/>
                     </div>
                     <div>
-                      <p className={styles.nombre}>{producto.name}</p>
+                      <p className={styles.nombre}>{producto.nombre}</p>
 
                       <div className={styles.cantidad}>
                         <p>Cantidad:</p> 
@@ -48,8 +52,8 @@ export default function Carrito({carrito, actualizarCantidad, eliminarProducto})
                           </select>
                       </div>
 
-                      <p className={styles.precio}><span>{producto.followers}</span></p>
-                      <p className={styles.subtotal}>Subtotal:<span>{producto.cantidad * producto.followers}</span></p>
+                      <p className={styles.precio}><span>{producto.precio}</span></p>
+                      <p className={styles.subtotal}>Subtotal:<span>{producto.cantidad * producto.precio}</span></p>
                     </div>
                     
                     <button
@@ -66,7 +70,7 @@ export default function Carrito({carrito, actualizarCantidad, eliminarProducto})
             </div>
             <aside className={styles.resumen}>
                 <h3>Resumen del pedido</h3>
-                <p> Total a pagar: {total}</p>
+                <p> Total a pagar: ${total}</p>
             </aside>
         </div>
     </main>

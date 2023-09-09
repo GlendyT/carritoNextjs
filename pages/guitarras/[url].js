@@ -6,7 +6,7 @@ import Layout from "@/components/layout"
 export default function Producto({guitarra, agregarCarrito}) {
    
   const [cantidad, setCantidad] = useState(0)
-  const {name, image, followers } = guitarra[2]
+  const {nombre, descripcion,imagen,precio  } = guitarra[0].attributes
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -17,24 +17,25 @@ export default function Producto({guitarra, agregarCarrito}) {
     }
     //Construir un objeto
     const guitarraSeleccionada = {
-      image,
-      name, 
-      followers
+      id: guitarra[0].id,
+      imagen: imagen.data.attributes.url,
+      nombre,
+      precio,
+      cantidad
     }
     agregarCarrito(guitarraSeleccionada)
   }
   return (
     <Layout
-      title={`Guitarra ${name}`}
+      title={`Guitarra ${nombre}`}
     > 
     <div className={styles.guitarra}>
-      <Image src={image} width={600} height={400} alt={`Imagen guitarra ${name}`} />
+      <Image src={imagen.data.attributes.url} width={600} height={400} alt={`Imagen guitarra ${nombre}`} />
        
       <div className={styles.contenido}>
-      <h3 className={styles.precio}>{name}</h3>
-          <p className={styles.descripcion}>j-hope (Jeong, Hoseok) is a South Korean rapper,
-           dancer, songwriter,music producer and member of 21st century pop icons, BTS. </p>
-          <p className={styles.precio}>{followers}</p>
+      <h3 className={styles.precio}>{nombre}</h3>
+          <p className={styles.descripcion}>{descripcion} </p>
+          <p className={styles.precio}>${precio}</p>
 
           <form
            onSubmit={handleSubmit}
@@ -64,15 +65,14 @@ export default function Producto({guitarra, agregarCarrito}) {
 }
 
 export async function getStaticPaths() {
-  const respuesta = await fetch(`${process.env.API_URL}/spotify-profiles`)
-  const { results } = await respuesta.json()
+  const respuesta = await fetch(`${process.env.API_URL}/guitarras`)
+  const { data } = await respuesta.json()
 
-  const paths = results.map(guitarra => ({
+  const paths = data.map(guitarra => ({
     params: {
-      url: guitarra.name
+      url: guitarra.attributes.url
     }
   }))
-
   return {
     paths,
     fallback: false
@@ -80,8 +80,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({params: { url }}){
-  const respuesta = await fetch(`${process.env.API_URL}/spotify-profiles?filters[url]=${url}&populate=image`)
-  const {results: guitarra} = await respuesta.json()
+  const respuesta = await fetch(`${process.env.API_URL}/guitarras?filters[url]=${url}&populate=imagen`)
+  const {data: guitarra} = await respuesta.json()
  return {
    props: {
      guitarra
@@ -90,9 +90,9 @@ export async function getStaticProps({params: { url }}){
 }
 
 /*export async function getServerSideProps({query: {url}}){
-   const respuesta = await fetch(`${process.env.API_URL}/spotify-profiles?filters[url]=${url}&populate=*
+   const respuesta = await fetch(`${process.env.API_URL}/guitarras?filters[url]=${url}&populate=image*
    `)
-   const {results: guitarra} = await respuesta.json()
+   const {data: guitarra} = await respuesta.json()
   return {
     props: {
       guitarra

@@ -14,13 +14,12 @@ export default function Blog({posts}) {
       <main className="contenedor">
         <h1 className="heading">Blog</h1>
         <div className={styles.grid}>
-          {posts?.map(post => (
+        {posts?.map(post => (
             <Post
               key={post.id}
-              post={post}
+              post={post.attributes}
             />
           ))}
-
         </div>
       </main>
     </Layout>
@@ -29,9 +28,10 @@ export default function Blog({posts}) {
   )
 }
 
+  
 export async function getStaticProps() {
-  const respuesta = await fetch(`${process.env.API_URL}/spotify-profiles`)
-  const {results : posts} = await respuesta.json()
+  const respuesta = await fetch(`${process.env.API_URL}/posts?populate=imagen`)
+  const {data : posts} = await respuesta.json()
 
   return {
     props: {

@@ -19,22 +19,19 @@ export default function Tienda({guitarras}) {
        <div className={styles.grid}> 
          {guitarras?.map(guitarra => (
           <Guitarra
-            key={guitarra?.name}
-            guitarra={guitarra}
+            key={guitarra?.id}
+            guitarra={guitarra.attributes}
           />
           ))}
          </div>
       </main>
-
-  
-
     </Layout>
   )
 }
 
 export async function getStaticProps() {
-  const respuesta = await fetch(`${process.env.API_URL}/spotify-profiles`)
-  const {results : guitarras} = await respuesta.json()
+  const respuesta = await fetch(`${process.env.API_URL}/guitarras?populate=imagen`)
+  const {data : guitarras} = await respuesta.json()
 
   return {
     props: {
@@ -46,8 +43,8 @@ export async function getStaticProps() {
 
 /*
 export async function getServerSideProps() {
-  const respuesta = await fetch(`${process.env.API_URL}/spotify-profiles?populate=*`)
-  const {results : guitarras} = await respuesta.json()
+  const respuesta = await fetch(`${process.env.API_URL}/guitarras?populate=imagen`)
+  const {data : guitarras} = await respuesta.json()
 
   return {
     props: {

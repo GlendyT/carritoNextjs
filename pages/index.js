@@ -6,7 +6,7 @@ import styles from "../styles/grid.module.css"
 
 
 
-export default function Home({guitarras, posts}) {
+export default function Home({guitarras, posts, curso}) {
 
   return (
     <>
@@ -20,22 +20,25 @@ export default function Home({guitarras, posts}) {
         <div className={styles.grid}> 
           {guitarras?.map(guitarra => (
             <Guitarra
-              key={guitarra?.name}
-              guitarra={guitarra}
+              key={guitarra?.id}
+              guitarra={guitarra.attributes}
             />
             ))}
         </div>
      </main>
 
-     <Curso/>
+     <Curso
+       curso={curso.attributes}
+     />
 
      <section className="contenedor">
       <h2 className="heading">Blog</h2>
+
       <div className={styles.grid}>
           {posts?.map(post => (
             <Post
-              key={post.id}
-              post={post}
+              key={post?.id}
+              post={post.attributes}
             />
           ))}
 
@@ -48,23 +51,27 @@ export default function Home({guitarras, posts}) {
 
 
 export async function getStaticProps() {
-  const urlGuitarras = `${process.env.API_URL}/spotify-profiles?populate=imagen`
-  const urlPosts = `${process.env.API_URL}/spotify-profiles?populate=imagen`
+  const urlGuitarras = `${process.env.API_URL}/guitarras?populate=imagen`
+  const urlPosts = `${process.env.API_URL}/posts?populate=imagen`
+  const urlCurso = `${process.env.API_URL}/curso?populate=imagen`
 
-  const [resGuitarras, resPosts] = await Promise.all([
+  const [ resGuitarras, resPosts, resCurso ] = await Promise.all([
     fetch(urlGuitarras),
-    fetch(urlPosts)
+    fetch(urlPosts),
+    fetch(urlCurso)
   ])
   
-  const [{results:guitarras}, {results:posts}] = await Promise.all([
+  const [{ data:guitarras }, { data:posts }, { data:curso }] = await Promise.all([
     resGuitarras.json(),
-    resPosts.json()
+    resPosts.json(),
+    resCurso.json()
   ])
 
   return{
     props:{
        guitarras,
-       posts
+       posts,
+       curso
     }
   }
 }

@@ -4,18 +4,17 @@ import { formatearFecha } from "@/utils/helpers"
 import styles from "../styles/blog.module.css"
 
 export default function Post({post}) {
-  const { name, monthlyPeak, image} = post
+  const {contenido, imagen, titulo, url, publishedAt} = post
   return (
     <article>
-      <Image src={image} width={600} height={400} alt={`Imagen Blog ${name}`}/>
+      <Image src={imagen.data.attributes.formats.medium.url} width={600} height={400} alt={`Imagen Blog ${titulo}`}/>
      
      <div className={styles.contenido}> 
-      <h3>{name}</h3>
-      <p>Esta fecha no tiene ninguna 
-      relacion con el artista</p>
-      <p className={styles.fecha}>{formatearFecha(monthlyPeak)}</p>
+      <h3>{titulo}</h3>
+      <p className={styles.fecha}>{formatearFecha(publishedAt)}</p>
+      <p className={styles.resumen}>{contenido}</p>
 
-      <Link href={`/blog/${name}`}>
+      <Link href={`/blog/${url}`}>
         <p className={styles.enlace}>
           Leer Post
         </p>
