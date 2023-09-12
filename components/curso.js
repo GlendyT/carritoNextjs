@@ -3,7 +3,7 @@ import styles from "../styles/curso.module.css"
 
 export default function Curso({curso}) {
 
-  const {contenido, imagen, titulo} = curso.attributes
+  const {contenido, imagen, titulo} = curso
 
   return (
       <section className={`${styles.curso} curso`}>

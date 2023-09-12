@@ -6,12 +6,10 @@ import styles from "../styles/carrito.module.css"
 
 export default function Carrito({carrito, actualizarCantidad, eliminarProducto}) {
 
-  console.log(guitarra)
-
   const [total, setTotal] = useState(0)
 
   useEffect(() => {
-    const calculoTotal = carrito.reduce ((total, producto) => total + (producto.cantidad + producto.precio), 0)
+    const calculoTotal = carrito.reduce ((total, producto) => total + (producto.cantidad * producto.precio), 0)
     setTotal(calculoTotal)
   }, [carrito])
 

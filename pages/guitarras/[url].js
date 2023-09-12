@@ -65,7 +65,7 @@ export default function Producto({guitarra, agregarCarrito}) {
 }
 
 export async function getStaticPaths() {
-  const respuesta = await fetch(`${process.env.API_URL}/guitarras`)
+  const respuesta = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/guitarras`)
   const { data } = await respuesta.json()
 
   const paths = data.map(guitarra => ({
@@ -80,7 +80,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({params: { url }}){
-  const respuesta = await fetch(`${process.env.API_URL}/guitarras?filters[url]=${url}&populate=imagen`)
+  const respuesta = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/guitarras?filters[url]=${url}&populate=imagen`)
   const {data: guitarra} = await respuesta.json()
  return {
    props: {

@@ -32,33 +32,11 @@ export default function Guitarra({guitarra, agregarCarrito}) {
         <h3 className={styles.precio}>{nombre}</h3>
         <p className={styles.descripcion}> {descripcion} </p>
         <p className={styles.precio}>${precio}</p>
-          <Link href={`/guitarras/${url}`}>
+          <Link legacyBehavior href={`/guitarras/${url}`}>
           <a className={styles.enlace}>
             Ver Producto
           </a>
           </Link> 
-
-        <form
-           onSubmit={handleSubmit}
-           className={styles.formulario}>
-            <label htmlFor="cantidad">Cantidad:</label>
-
-            <select 
-            onChange={ e => setCantidad(+e.target.value)}
-            id="cantidad">
-              <option value="0">-- Seleccione --</option>
-              <option value="1"> 1 </option>
-              <option value="2"> 2 </option>
-              <option value="3"> 3 </option>
-              <option value="4"> 4 </option>
-              <option value="5"> 5 </option>
-             </select>
-
-             <input
-               type="submit"
-               value="Agregar al carrito"
-             />
-          </form>
 
       </div>
     </div>
