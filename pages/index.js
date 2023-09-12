@@ -49,7 +49,6 @@ export default function Home({guitarras, posts, curso}) {
   )
 }
 
-//
 export async function getStaticProps() {
   const urlGuitarras = `${process.env.NEXT_PUBLIC_API_URL}/guitarras?populate=imagen`
   const urlPosts = `${process.env.NEXT_PUBLIC_API_URL}/posts?populate=imagen`
