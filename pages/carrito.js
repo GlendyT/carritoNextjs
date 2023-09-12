@@ -50,8 +50,8 @@ export default function Carrito({carrito, actualizarCantidad, eliminarProducto})
                           </select>
                       </div>
 
-                      <p className={styles.precio}><span>{producto.precio}</span></p>
-                      <p className={styles.subtotal}>Subtotal:<span>{producto.cantidad * producto.precio}</span></p>
+                      <p className={styles.precio}><span>${producto.precio}</span></p>
+                      <p className={styles.subtotal}>Subtotal:<span>${producto.cantidad * producto.precio}</span></p>
                     </div>
                     
                     <button
